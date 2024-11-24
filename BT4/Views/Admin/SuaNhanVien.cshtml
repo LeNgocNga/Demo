@@ -1,0 +1,78 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Demo.Models.TNhanVien
+
+@{
+    ViewData["Title"] = "SuaNhanVien";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Ch?nh s?a thông tin nhân viên</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="SuaNhanVien">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Mã Nhân Viên (?n) -->
+            <input type="hidden" asp-for="MaNhanVien" />
+
+            <!-- Username (?n) -->
+            <input type="hidden" asp-for="Username" />
+
+            <!-- Tên Nhân Viên -->
+            <div class="form-group">
+                <label asp-for="TenNhanVien" class="control-label">Tên Nhân Viên</label>
+                <input asp-for="TenNhanVien" class="form-control" />
+                <span asp-validation-for="TenNhanVien" class="text-danger"></span>
+            </div>
+
+            <!-- Ngày Sinh -->
+            <div class="form-group">
+                <label asp-for="NgaySinh" class="control-label">Ngày Sinh</label>
+                <input asp-for="NgaySinh" type="date" class="form-control" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+
+            <!-- S? Ði?n Tho?i 1 -->
+            <div class="form-group">
+                <label asp-for="SoDienThoai1" class="control-label">S? Ði?n Tho?i 1</label>
+                <input asp-for="SoDienThoai1" class="form-control" />
+                <span asp-validation-for="SoDienThoai1" class="text-danger"></span>
+            </div>
+
+            <!-- S? Ði?n Tho?i 2 -->
+            <div class="form-group">
+                <label asp-for="SoDienThoai2" class="control-label">S? Ði?n Tho?i 2</label>
+                <input asp-for="SoDienThoai2" class="form-control" />
+                <span asp-validation-for="SoDienThoai2" class="text-danger"></span>
+            </div>
+
+            <!-- Ð?a Ch? -->
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Ð?a Ch?</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+
+            <!-- Ch?c V? -->
+            <div class="form-group">
+                <label asp-for="ChucVu" class="control-label">Ch?c V?</label>
+                <input asp-for="ChucVu" class="form-control" />
+                <span asp-validation-for="ChucVu" class="text-danger"></span>
+            </div>
+
+            <!-- Ghi Chú -->
+            <div class="form-group">
+                <label asp-for="GhiChu" class="control-label">Ghi Chú</label>
+                <textarea asp-for="GhiChu" class="form-control"></textarea>
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
+
+            <!-- Luu Thay Ð?i -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Luu Thay Ð?i</button>
+                <a asp-action="DanhMucNhanVien" class="btn btn-secondary">Quay l?i</a>
+            </div>
+        </form>
+    </div>
+</div>

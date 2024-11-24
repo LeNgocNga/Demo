@@ -1,0 +1,70 @@
+﻿@using Demo.Models
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TKhachHang>
+
+@{
+    ViewData["Title"] = "Danh M?c Khách Hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h3>Danh mục khách hàng</h3>
+
+
+<p>@TempData["Message"]</p>
+
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>Tên khách hàng</th>
+            <th>Ngày sinh</th>
+            <th>Số điện thoại</th>
+            <th>Ðịa chỉ</th>
+            <th>Loại khách hàng</th>
+            <th>UserName</th>
+            <th>Ghi chú</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string cls = "table-success";
+        }
+
+        @foreach (var item in Model)
+        {
+            i++;
+            cls = (i % 2 == 0) ? "table-primary" : "table-success";
+            <tr class="@cls">
+                <td>@Html.DisplayFor(modelItem => item.TenKhachHang)</td>
+                <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+                <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                <td>@Html.DisplayFor(modelItem => item.LoaiKhachHang)</td>
+                <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                <td>@Html.DisplayFor(modelItem => item.GhiChu)</td>
+                <td>
+                    <a asp-action="SuaKhachHang" asp-route-maKhachHang="@item.MaKhanhHang" class="btn btn-primary btn-sm">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <!-- Form d? g?i yêu c?u xóa -->
+                    <form asp-action="XacNhanXoaKhachHang" method="post" style="display:inline;" onsubmit="return confirm('B?n có ch?c ch?n mu?n xóa ngu?i dùng này?');">
+                        <input type="hidden" name="maKhachHang" value="@item.MaKhanhHang" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Phân trang -->
+@Html.PagedListPager(Model, page => Url.Action("DanhMucKhachHang", new { page = page }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string> { "page-item" },
+    PageClasses = new List<string> { "page-link" }
+})

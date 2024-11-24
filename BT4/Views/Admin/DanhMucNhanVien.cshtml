@@ -1,0 +1,68 @@
+﻿@using Demo.Models
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TNhanVien>
+
+@{
+    ViewData["Title"] = "Danh M?c Nhân Viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h3>Danh mục nhân viên</h3>
+
+<p>
+    <a asp-action="ThemNhanVienMoi" class="btn btn-success mb-3">Create New</a>
+</p>
+
+<div class="container mt-5">
+   
+    <table class="table table-striped table-hover">
+        <thead class="table-warning">
+            <tr>
+                <th>Tên Nhân Viên</th>
+                <th>Ngày Sinh</th>
+                <th>Số Ðiện Thoại 1</th>
+                <th>Số Ðiện Thoại 2</th>
+                <th>Ðịa Chỉ</th>
+                <th>Chức Vụ</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nhanVien in Model)
+            {
+                <tr>
+                    <td>@nhanVien.TenNhanVien</td>
+                    <td>@nhanVien.NgaySinh?.ToString("dd/MM/yyyy")</td>
+                    <td>@nhanVien.SoDienThoai1</td>
+                    <td>@nhanVien.SoDienThoai2</td>
+                    <td>@nhanVien.DiaChi</td>
+                    <td>@nhanVien.ChucVu</td>
+                    <td>@nhanVien.Username</td>
+                    <td>
+                        <a asp-action="SuaNhanVien" asp-route-maNhanVien="@nhanVien.MaNhanVien" class="btn btn-primary btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <form asp-action="XoaNhanVien" method="post" style="display:inline;" onsubmit="return confirm('B?n có ch?c ch?n mu?n xóa nhân viên này?');">
+                            <input type="hidden" name="maNhanVien" value="@nhanVien.MaNhanVien" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation">
+        @Html.PagedListPager(Model, page => Url.Action("DanhMucNhanVien", new { page = page }), new PagedListRenderOptions
+   {
+       LiElementClasses = new List<string> { "page-item" },
+       PageClasses = new List<string> { "page-link" }
+   })
+    </nav>
+</div>
